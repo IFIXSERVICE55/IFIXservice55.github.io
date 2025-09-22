@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>I FIX - Servicio Técnico Informático</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00bfff;
+      --dark: #1a1a1a;
+      --bg: #f4f4f4;
+      --accent: #25D366;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Roboto', sans-serif; background: var(--bg); color: #222; overflow-x: hidden; }
+    .container { width: 92%; max-width: 1200px; margin: 0 auto; padding: 18px; }
+
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: var(--dark);
+      color: #fff;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 20px;
+    }
+    .rocket { font-size: 4.2rem; animation: bounce 1s infinite; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    #splash h1 { margin: 0; font-size: 1.4rem; text-align: center; }
+    .progress-container { width: 80%; max-width: 420px; background: #222; border-radius: 999px; overflow: hidden; }
+    .progress-bar {
+      height: 20px;
+      width: 0;
+      background: var(--primary);
+      text-align: center;
+      line-height: 20px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: width 0.15s linear;
+    }
+
+    header {
+      background: var(--dark);
+      color: #fff;
+      padding: 12px 0;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    header .top { display: flex; align-items: center; gap: 12px; justify-content: space-between; }
+    header .brand { display: flex; align-items: center; gap: 12px; }
+    header img.logo { width: 70px; height: auto; border-radius: 6px; cursor: pointer; }
+    nav ul { display: flex; gap: 14px; list-style: none; margin: 0; padding: 0; align-items: center; }
+    nav a { color: #fff; text-decoration: none; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; }
+    nav a:hover { color: var(--primary); }
+
+    #hero { background: linear-gradient(90deg, var(--dark), var(--primary)); color: #fff; min-height: 300px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 30px; }
+    #hero h2 { font-size: 2rem; margin: 0; }
+    #hero p { margin: 10px 0 0; font-size: 1.05rem; }
+
+    section { padding: 34px 0; }
+    .section-title { text-align: center; font-size: 1.8rem; margin-bottom: 16px; }
+    #about .card { background: #fff; padding: 18px; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+
+    #services .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 18px; }
+    .service-card { background: #fff; padding: 14px; border-radius: 10px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.06); cursor: pointer; transition: transform .16s; }
+    .service-card:hover { transform: translateY(-6px); }
+    .service-card .icon { font-size: 1.6rem; color: var(--primary); display: block; margin-bottom: 10px; }
+
+    #contact { color: #fff; }
+    .contact-wrap { display: flex; gap: 22px; flex-wrap: wrap; align-items: flex-start; justify-content: center; }
+    .contact-card { background: rgba(255,255,255,0.06); padding: 18px; border-radius: 10px; min-width: 280px; max-width: 480px; width: 100%; }
+    .contact-card form { display: flex; flex-direction: column; gap: 10px; }
+    input, textarea { padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+    button { background: var(--primary); border: none; color: #fff; padding: 10px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .whatsapp-btn { display: inline-block; background: var(--accent); color: #fff; padding: 10px 16px; border-radius: 999px; text-decoration: none; font-weight: 700; }
+
+    .map-container { width: 100%; max-width: 520px; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+
+    .subpage { display: none; min-height: calc(100vh - 80px); padding: 28px 0; background: var(--bg); }
+    .subpage.active { display: block; }
+    .back-btn { display: inline-block; margin-bottom: 14px; background: var(--primary); color: #fff; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-weight: 700; }
+
+    .pc-option, .repair-item { background: #fff; padding: 14px; border-radius: 10px; margin-bottom: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+
+    .messages { max-width: 820px; margin: 14px auto; background: #fff; padding: 14px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+    .message-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+
+    footer { background: #333; color: #fff; padding: 18px; text-align: center; }
+
+    @media(max-width: 900px) {
+      header .top { flex-direction: column; gap: 8px; padding: 6px; }
+      .container { padding: 12px; }
+      #hero { min-height: 220px; padding: 18px; }
+    }
+    @media(max-width: 520px) {
+      .rocket { font-size: 3rem; }
+      #splash h1 { font-size: 1.1rem; }
+      .progress-container { width: 92%; }
+      header img.logo { width: 56px; }
+      nav ul { gap: 8px; font-size: 0.8rem; }
+      #hero h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="splash">
+    <div class="rocket">🚀</div>
+    <h1>Impulsando tu tecnología con I FIX</h1>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar">0%</div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container top">
+      <div class="brand">
+        <a href="#" onclick="showMain()"><img src="logoifix.jpg" class="logo" /></a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#" onclick="showMain(); scrollToSection('about'); return false">Quiénes Somos</a></li>
+          <li><a href="#" onclick="showMain(); scrollToSection('services'); return false">Servicios</a></li>
+          <li><a href="#" onclick="showMain(); scrollToSection('contact'); return false">Contacto</a></li>
+          <li><a href="#" onclick="showMain(); scrollToSection('login'); return false">Iniciar Sesión</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="mainPage">
+    <section id="hero">
+      <div class="container">
+        <h2>Soluciones tecnológicas a tu medida</h2>
+        <p>Reparación, optimización y mantenimiento para tu PC y celular. Confianza y rapidez en cada servicio.</p>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">Quiénes Somos</h2>
+        <div><p>En I FIX ofrecemos servicio técnico integral: armado de PC a medida, reparación de hardware, reinstalación de sistemas operativos, optimización y mantenimiento para equipos y celulares. Atención personalizada y presupuestos transparentes.</p></div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="services-grid">
+          <div class="service-card" onclick="openService('armado')">
+            <span class="icon">💻</span>
+            <h3>Armado de PC</h3>
+            <p>Computadoras a medida.</p>
+          </div>
+          <div class="service-card" onclick="openService('reparacion')">
+            <span class="icon">🔧</span>
+            <h3>Reparación</h3>
+            <p>Diagnóstico, software y backup.</p>
+          </div>
+          <div class="service-card" onclick="openService('celulares')">
+            <span class="icon">📲</span>
+            <h3>Soporte para celulares</h3>
+            <p>Recuperación y optimización móvil.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <h2 class="section-title">Contáctanos</h2>
+        <div class="contact-wrap">
+          <div class="contact-card">
+            <form id="contactForm">
+              <input type="text" name="nombre" id="c_nombre" placeholder="Tu nombre" required />
+              <input type="email" name="email" id="c_email" placeholder="Tu email" required />
+              <textarea name="mensaje" id="c_mensaje" rows="4" placeholder="Tu mensaje" required></textarea>
+              <div style="display:flex; gap:8px; align-items:center">
+                <button type="submit">Enviar</button>
+                <a class="whatsapp-btn" href="https://wa.link/emm9i7" target="_blank">💬 WhatsApp</a>
+              </div>
+              <p id="c_status" style="display:none; margin-top:10px; color: lime">Mensaje enviado. Gracias.</p>
+            </form>
+          </div>
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3367.641877490515!2d-68.8517028!3d-32.8599541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e088d189238c5%3A0x6123229705c797bf!2sVicente%20Polimeni%20630%2C%20M5539%20Las%20Heras%2C%20Mendoza!5e0!3m2!1ses!2sar!4v1694730152000!5m2!1ses!2sar"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="login">
+      <div class="container">
+        <h2 class="section-title">Iniciar Sesión</h2>
+        <div style="max-width: 420px; margin: auto; background: #fff; padding: 18px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.06);">
+          <form id="loginForm">
+            <input type="text" id="usuario" placeholder="Usuario" required />
+            <input type="password" id="clave" placeholder="Contraseña" required />
+            <div style="margin-top:8px; display:flex; gap:8px;">
+              <button type="submit">Ingresar</button>
+              <button type="button" onclick="showMessages()">Mensajes</button>
+            </div>
+            <p id="loginError" style="color:#e74c3c; display:none; margin-top:10px;">Usuario o contraseña incorrectos</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="armadoSub" class="subpage">
+    <div class="container">
+      <a href="#" class="back-btn" onclick="showMain()">← Volver</a>
+      <h2>Armado de PC</h2>
+      <div class="pc-option">
+        <h3>Gama media — Intel i5-11400</h3>
+        <ul>
+          <li>Procesador: Intel Core i5-11400</li>
+          <li>Placa madre compatible B560</li>
+          <li>RAM: 16 GB DDR4</li>
+          <li>SSD: 512 GB</li>
+          <li>Fuente: 550W 80+</li>
+        </ul>
+        <p>Presupuesto estimado: $1.100.000 ARS</p>
+      </div>
+      <div class="pc-option">
+        <h3>Opción económica — i5-3470 usado</h3>
+        <ul>
+          <li>Procesador: Intel Core i5-3470</li>
+          <li>RAM: 16 GB DDR3</li>
+          <li>SSD: 480 GB</li>
+        </ul>
+        <p>Presupuesto estimado: $250.000 ARS</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="reparacionSub" class="subpage">
+    <div class="container">
+      <a href="#" class="back-btn" onclick="showMain()">← Volver</a>
+      <h2>Reparación</h2>
+      <div class="repair-item">
+        <h3>Problemas comunes</h3>
+        <ul>
+          <li>Virus / malware</li>
+          <li>Sistema operativo lento o con fallos</li>
+          <li>Pérdida de datos / formateo requerido</li>
+          <li>Errores de inicio de Windows</li>
+          <li>Drivers faltantes o incompatibles</li>
+        </ul>
+      </div>
+      <div class="repair-item">
+        <h3>Servicios cotizados (Septiembre 2025, Argentina)</h3>
+        <ul>
+          <li>Formateo + instalación de Sistema Operativo y programas básicos: $45.000 ARS</li> <!-- basado en Vida Informatica zona 1 -->
+          <li>Limpieza hardware + formateo + backup hasta 100 GB: $65.000 ARS</li> <!-- Vida Informatica zona 1 listado precios septiembre -->
+          <li>Recuperación de datos simples (USB / Pendrive / disco lógico): $18.000-$30.000 ARS según caso</li> <!-- servicio tecnico de pc listados -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="celularesSub" class="subpage">
+    <div class="container">
+      <a href="#" class="back-btn" onclick="showMain()">← Volver</a>
+      <h2>Soporte para celulares</h2>
+    </div>
+  </div>
+
+  <div id="mensajesSub" class="subpage">
+    <div class="container">
+      <a href="#" class="back-btn" onclick="showMain()">← Volver</a>
+      <h2>Mensajes recibidos</h2>
+      <div id="listaMensajes" class="messages"></div>
+      <div style="text-align:center; margin-top:12px;">
+        <button style="background:#e74c3c; color:#fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer;" onclick="borrarMensajes()">Borrar todos los mensajes</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div>&copy; 2025 I FIX</div>
+      <div style="font-size:.9rem; opacity:.9;">Ubicación: Vicente Polimeni 630, Las Heras, Mendoza</div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      const splash = document.getElementById('splash');
+      const bar = document.getElementById('progress-bar');
+      let progress = 0;
+      const interval = setInterval(()=>{
+        progress += Math.floor(Math.random()*6) + 1;
+        if(progress >= 100) progress = 100;
+        bar.style.width = progress + '%';
+        bar.textContent = progress + '%';
+        if(progress >= 100){
+          clearInterval(interval);
+          setTimeout(()=>{
+            splash.style.transition = 'opacity .5s ease';
+            splash.style.opacity = '0';
+            setTimeout(()=>{ splash.style.display = 'none'; },600);
+          },350);
+        }
+      },50);
+    })();
+
+    function openService(key){
+      document.getElementById('mainPage').style.display = 'none';
+      document.querySelectorAll('.subpage').forEach(s=>{ s.classList.remove('active'); });
+      document.getElementById(key + 'Sub').classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function showMain(){
+      document.getElementById('mainPage').style.display = 'block';
+      document.querySelectorAll('.subpage').forEach(s=>{ s.classList.remove('active'); });
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(el){
+        el.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    }
+
+    (function(){
+      const form = document.getElementById('contactForm');
+      const status = document.getElementById('c_status');
+      const FS = 'https://formspree.io/f/mqayzbjk';
+      let saved = JSON.parse(localStorage.getItem('ifx_msgs')) || [];
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        const n = document.getElementById('c_nombre').value.trim();
+        const em = document.getElementById('c_email').value.trim();
+        const m = document.getElementById('c_mensaje').value.trim();
+        if(!n || !em || !m) return;
+        try {
+          const res = await fetch(FS, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre: n, email: em, mensaje: m })
+          });
+          if(res.ok){
+            saved.push({ nombre: n, email: em, mensaje: m, fecha: (new Date()).toISOString() });
+            localStorage.setItem('ifx_msgs', JSON.stringify(saved));
+            status.style.display = 'block';
+            setTimeout(()=> status.style.display = 'none', 3000);
+            form.reset();
+            if(document.getElementById('mensajesSub').classList.contains('active')){
+              renderMessages();
+            }
+          }
+        } catch (err) {}
+      });
+      window.renderMessages = function(){
+        const cont = document.getElementById('listaMensajes');
+        const arr = JSON.parse(localStorage.getItem('ifx_msgs')) || [];
+        if(arr.length === 0){
+          cont.innerHTML = '<p style="text-align:center; color:#777;">No hay mensajes aún.</p>';
+        } else {
+          cont.innerHTML = arr.map(o=>{
+            const d = new Date(o.fecha);
+            return '<div class="message-item"><strong>'+escapeHtml(o.nombre)+'</strong> — <small>'+escapeHtml(o.email)+'</small><div style="margin-top:6px;">'+escapeHtml(o.mensaje)+'</div><div style="margin-top:6px;font-size:.8rem;color:#666;">'+d.toLocaleString()+'</div></div>';
+          }).join('');
+        }
+      };
+      window.borrarMensajes = function(){
+        localStorage.removeItem('ifx_msgs');
+        renderMessages();
+      };
+      function escapeHtml(str){
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+    })();
+
+    function downloadPDF(){
+      const arr = JSON.parse(localStorage.getItem('ifx_msgs')) || [];
+      let content = 'Presupuesto de mensajes\\n\\n';
+      arr.forEach((o,i)=>{
+        const d = new Date(o.fecha);
+        content += (i+1)+'. '+ o.nombre +' — '+ o.email +' — '+ o.mensaje +' — '+ d.toLocaleString() +'\\n';
+      });
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'presupuesto_mensajes.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+
+</body>
+</html>
