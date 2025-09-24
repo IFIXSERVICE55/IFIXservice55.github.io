@@ -406,19 +406,20 @@
                 <p class="text-center text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">Envíanos un mensaje o contáctanos por WhatsApp para obtener una respuesta rápida.</p>
 
                 <!-- Formulario de Contacto -->
-                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 max-w-2xl mx-auto" id="contact-form-container">
-                    <form id="contact-form">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                    <!-- Formspree Form -->
+                    <form action="https://formspree.io/f/mqayzbjk" method="POST">
                         <div class="mb-4">
                             <label for="nombre" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Nombre</label>
                             <input type="text" id="nombre" name="nombre" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                         </div>
                         <div class="mb-4">
-                            <label for="contacto" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Número de Contacto</label>
-                            <input type="tel" id="contacto" name="contacto" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            <label for="contacto" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Email</label>
+                            <input type="email" id="email" name="email" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                         </div>
                         <div class="mb-6">
-                            <label for="motivo" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Motivo</label>
-                            <textarea id="motivo" name="motivo" rows="5" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
+                            <label for="motivo" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Mensaje</label>
+                            <textarea id="motivo" name="message" rows="5" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
                         </div>
                         <div class="flex items-center justify-center">
                             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-colors transform hover:scale-105">
@@ -426,13 +427,10 @@
                             </button>
                         </div>
                     </form>
-                    <div id="thank-you-message" class="contact-message">
-                        ¡Gracias por contactarnos! A la brevedad nos comunicaremos contigo.
-                    </div>
                 </div>
 
                 <!-- Botón de WhatsApp -->
-                <div class="text-center">
+                <div class="text-center mt-8">
                     <button id="whatsapp-btn" class="whatsapp-btn inline-flex items-center space-x-2 shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         <span>WhatsApp</span>
@@ -485,18 +483,6 @@
                     behavior: 'smooth'
                 });
             });
-        });
-
-        // Lógica del formulario de contacto
-        const contactForm = document.getElementById('contact-form');
-        const thankYouMessage = document.getElementById('thank-you-message');
-
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            setTimeout(() => {
-                contactForm.style.display = 'none';
-                thankYouMessage.style.display = 'block';
-            }, 500);
         });
 
         // Lógica del botón de modo oscuro/claro
