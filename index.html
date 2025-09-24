@@ -14,7 +14,21 @@
             --secondary-color: #f5f5f5;
             --text-color: #333;
             --bg-dark: #2c3e50;
-            --loader-color: #f00;
+            --bg-light: #f5f5f5;
+            --card-bg: white;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --whatsapp-color: #25D366;
+            --gear-color: #ff5722;
+        }
+
+        .dark-mode {
+            --primary-color: #7986cb;
+            --secondary-color: #2c3e50;
+            --text-color: #e0e0e0;
+            --bg-light: #2c3e50;
+            --card-bg: #34495e;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --gear-color: #ffccbc;
         }
 
         body {
@@ -24,8 +38,9 @@
             background-color: var(--secondary-color);
             color: var(--text-color);
             scroll-behavior: smooth;
+            transition: background-color 0.5s, color 0.5s;
         }
-
+        
         /* Loading Screen */
         #loader-wrapper {
             position: fixed;
@@ -41,70 +56,53 @@
             align-items: center;
             z-index: 1000;
             transition: opacity 0.5s ease-in-out;
-            text-align: center;
         }
-
-        .loader-text {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .loader-logo {
-            margin-bottom: 2rem;
+        .gear {
             width: 100px;
             height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            animation: rotate 4s linear infinite;
         }
-        
-        /* Círculos de carga */
-        .loader-circle-11 {
-            position: relative;
-            width: 70px;
-            height: 70px;
-            transform-style: preserve-3d;
-            perspective: 400px;
-        }
-        .loader-circle-11 .arc {
-            position: absolute;
-            content: "";
-            top: 0;
-            left: 0;
+        .gear img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border-bottom: 5px solid var(--loader-color);
+            filter: invert(47%) sepia(95%) saturate(494%) hue-rotate(353deg) brightness(96%) contrast(98%);
         }
-        .loader-circle-11 .arc:nth-child(1) {
-            animation: rotate1 1.15s linear infinite;
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        .loader-circle-11 .arc:nth-child(2) {
-            animation: rotate2 1.15s linear infinite;
+        
+        .loader-slogan {
+            font-family: monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 0.15em solid orange;
+            animation: typing 2.5s steps(30, end), blink-caret 0.75s step-end infinite;
+            display: inline-block;
+            margin-top: 1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            max-width: 0;
         }
-        .loader-circle-11 .arc:nth-child(3) {
-            animation: rotate3 1.15s linear infinite;
+        
+        .loader-slogan.is-visible {
+            opacity: 1;
+            max-width: 100%;
+            animation: typing 2.5s steps(30, end), blink-caret 0.75s step-end infinite;
         }
-        .loader-circle-11 .arc:nth-child(1) {
-            animation-delay: -0.8s;
+        
+        @keyframes typing {
+            from { max-width: 0 }
+            to { max-width: 100% }
         }
-        .loader-circle-11 .arc:nth-child(2) {
-            animation-delay: -0.4s;
-        }
-        .loader-circle-11 .arc:nth-child(3) {
-            animation-delay: 0s;
-        }
-        @keyframes rotate1 {
-            from { transform: rotateX(35deg) rotateY(-45deg) rotateZ(0); }
-            to { transform: rotateX(35deg) rotateY(-45deg) rotateZ(1turn); }
-        }
-        @keyframes rotate2 {
-            from { transform: rotateX(50deg) rotateY(10deg) rotateZ(0); }
-            to { transform: rotateX(50deg) rotateY(10deg) rotateZ(1turn); }
-        }
-        @keyframes rotate3 {
-            from { transform: rotateX(35deg) rotateY(55deg) rotateZ(0); }
-            to { transform: rotateX(35deg) rotateY(55deg) rotateZ(1turn); }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
         }
 
         /* Main Content */
@@ -122,11 +120,12 @@
 
         /* Header and Navigation */
         header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px var(--shadow-color);
             position: sticky;
             top: 0;
             z-index: 50;
+            transition: background-color 0.5s, box-shadow 0.5s;
         }
 
         .nav-link {
@@ -154,7 +153,7 @@
         /* Hero section */
         #home {
             background: url('https://placehold.co/1920x1080/E0E0E0/white?text=I+FIX+SOLUTIONS') no-repeat center center/cover;
-            color: var(--bg-dark);
+            color: var(--text-color);
             text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
             display: flex;
             align-items: center;
@@ -164,15 +163,16 @@
 
         /* Services Cards */
         .service-card {
-            background-color: white;
+            background-color: var(--card-bg);
             border-radius: 0.75rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px var(--shadow-color);
             padding: 2rem;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.5s;
         }
 
         .service-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 8px 30px var(--shadow-color);
         }
 
         /* Contact Form */
@@ -184,22 +184,9 @@
             border-radius: 0.5rem;
             margin-top: 0.5rem;
         }
-
-        #contact form button {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: bold;
-            padding: 0.75rem 2rem;
-            border-radius: 0.5rem;
-            transition: background-color 0.2s;
-        }
-
-        #contact form button:hover {
-            background-color: #303f9f;
-        }
-
+        
         .whatsapp-btn {
-            background-color: #25D366;
+            background-color: var(--whatsapp-color);
             color: white;
             font-weight: bold;
             padding: 0.75rem 2rem;
@@ -210,43 +197,98 @@
         .whatsapp-btn:hover {
             background-color: #128C7E;
         }
+
+        /* WhatsApp Message Popup */
+        .whatsapp-message-popup {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+
+        .chat-bubble {
+            background-color: #dcf8c6;
+            color: black;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            max-width: 250px;
+            margin-bottom: 0.5rem;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .whatsapp-icon-fixed {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--whatsapp-color);
+            color: white;
+            border-radius: 50%;
+            padding: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-icon-fixed:hover {
+            transform: scale(1.1);
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: var(--card-bg);
+            border: 2px solid var(--text-color);
+            border-radius: 9999px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.5s, border 0.5s;
+            z-index: 60;
+        }
+        .theme-toggle svg {
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
 
     <!-- Pantalla de carga -->
     <div id="loader-wrapper">
-        <div class="loader-logo">
-            <!-- Simulación de un logo de PC o programación -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
+        <div class="loader-container flex flex-col items-center">
+            <div class="gear">
+                <img src="https://assets.codepen.io/6093409/gear.svg.png" alt="an illustration of a gear" />
+            </div>
+            <p id="loader-slogan" class="loader-slogan text-xl sm:text-2xl font-bold text-orange-400">Potencia tu PC, confía en I FIX!</p>
         </div>
-        <div class="loader-circle-11">
-            <div class="arc"></div>
-            <div class="arc"></div>
-            <div class="arc"></div>
-        </div>
-        <div class="loader-text mt-8">Potencia tu pc, confía en I FIX!</div>
     </div>
 
     <!-- Contenido principal -->
     <div id="main-content">
         <!-- Header y Navegación -->
         <header class="p-4">
-            <div class="container flex justify-between items-center">
-                <a href="#home" class="flex items-center space-x-2">
+            <div class="container flex flex-col sm:flex-row justify-between items-center text-center sm:text-left relative">
+                <a href="#home" class="flex items-center space-x-2 mb-4 sm:mb-0">
                     <img src="logoifix.jpg" alt="Logo de I FIX" class="h-10 w-10 rounded-full border-2 border-transparent hover:border-blue-500 transition-all">
-                    <span class="text-xl font-bold text-gray-800">I FIX SOLUTIONS</span>
+                    <span class="text-xl font-bold">I FIX SOLUTIONS</span>
                 </a>
                 <nav>
-                    <ul class="flex space-x-6">
-                        <li><a href="#servicios" class="nav-link text-gray-600 font-semibold">Servicios</a></li>
-                        <li><a href="#quienes-somos" class="nav-link text-gray-600 font-semibold">Quiénes Somos</a></li>
-                        <li><a href="#ubicacion" class="nav-link text-gray-600 font-semibold">Dónde nos ubicamos</a></li>
-                        <li><a href="#contacto" class="nav-link text-gray-600 font-semibold">Contáctanos</a></li>
+                    <ul class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                        <li><a href="#servicios" class="nav-link font-semibold">Servicios</a></li>
+                        <li><a href="#quienes-somos" class="nav-link font-semibold">Quiénes Somos</a></li>
+                        <li><a href="#ubicacion" class="nav-link font-semibold">Dónde nos ubicamos</a></li>
+                        <li><a href="#contacto" class="nav-link font-semibold">Contáctanos</a></li>
                     </ul>
                 </nav>
             </div>
@@ -254,15 +296,15 @@
 
         <!-- Sección de Inicio -->
         <section id="home" class="min-h-screen flex items-center justify-center text-center">
-            <div class="bg-white bg-opacity-70 p-8 rounded-xl shadow-lg">
-                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-4">Soluciones Informáticas <br> a tu alcance.</h1>
-                <p class="text-lg md:text-xl text-gray-700">Reparación, venta y armado de PC. Tu tecnología en las mejores manos.</p>
-                <a href="#servicios" class="mt-8 inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition-colors">Ver Servicios</a>
+            <div class="bg-white dark:bg-gray-800 bg-opacity-70 dark:bg-opacity-70 p-8 rounded-xl shadow-lg mx-4 transition-colors">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-4">Soluciones Informáticas <br class="sm:hidden"> a tu alcance.</h1>
+                <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300">Reparación, venta y armado de PC. Tu tecnología en las mejores manos.</p>
+                <a href="#servicios" class="mt-8 inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition-colors transform hover:scale-105">Ver Servicios</a>
             </div>
         </section>
 
         <!-- Sección de Servicios -->
-        <section id="servicios" class="bg-gray-100">
+        <section id="servicios" class="bg-gray-100 dark:bg-gray-900">
             <div class="container">
                 <h2 class="section-title">Nuestros Servicios</h2>
                 
@@ -273,13 +315,13 @@
                         <div class="space-y-4">
                             <div>
                                 <h4 class="font-semibold text-xl">Instalación Limpia de Windows 10</h4>
-                                <p class="text-gray-600">Incluye programas básicos (Office, utilidades) para un equipo listo para usar.</p>
-                                <p class="text-xl font-bold mt-2 text-blue-800">$65,000 ARS</p>
+                                <p class="text-gray-600 dark:text-gray-400">Incluye programas básicos (Office, utilidades) para un equipo listo para usar.</p>
+                                <p class="text-xl font-bold mt-2 text-blue-800 dark:text-blue-400">$65,000 ARS</p>
                             </div>
                             <div>
                                 <h4 class="font-semibold text-xl">Backup y Recuperación de Datos</h4>
-                                <p class="text-gray-600">Copia de seguridad y recuperación de archivos importantes.</p>
-                                <ul class="list-disc list-inside mt-2 text-gray-700">
+                                <p class="text-gray-600 dark:text-gray-400">Copia de seguridad y recuperación de archivos importantes.</p>
+                                <ul class="list-disc list-inside mt-2 text-gray-700 dark:text-gray-300">
                                     <li>Hasta 100 GB: <span class="font-bold">$30,000 ARS</span></li>
                                     <li>100 GB - 500 GB: <span class="font-bold">$55,000 ARS</span></li>
                                     <li>Más de 500 GB: <span class="font-bold">$100,000 ARS</span></li>
@@ -289,7 +331,7 @@
                     </div>
                     <div class="service-card">
                         <h3 class="text-2xl font-bold text-blue-600 mb-4">Reparación y Armado de Hardware</h3>
-                        <p class="text-gray-600">Diagnóstico y solución de problemas físicos en tu computadora. Armamos tu PC a medida según tus necesidades y presupuesto.</p>
+                        <p class="text-gray-600 dark:text-gray-400">Diagnóstico y solución de problemas físicos en tu computadora. Armamos tu PC a medida según tus necesidades y presupuesto.</p>
                         <p class="font-semibold mt-4 text-xl">¡Contáctanos para una cotización personalizada!</p>
                     </div>
                 </div>
@@ -301,49 +343,57 @@
                     <div class="service-card text-center">
                         <h4 class="font-semibold text-lg">SSD 240GB MARCA WAVE</h4>
                         <img src="https://placehold.co/300x200/cccccc/333333?text=SSD+240GB" alt="SSD 240GB" class="mx-auto my-4 rounded-lg">
-                        <p class="text-gray-600">Acelera tu sistema operativo y programas.</p>
-                        <p class="text-xl font-bold mt-2 text-blue-800">$26,000 ARS</p>
+                        <p class="text-gray-600 dark:text-gray-400">Acelera tu sistema operativo y programas.</p>
+                        <p class="text-xl font-bold mt-2 text-blue-800 dark:text-blue-400">$26,000 ARS</p>
                     </div>
                     <!-- Ejemplo de Producto -->
                     <div class="service-card text-center">
                         <h4 class="font-semibold text-lg">Memoria RAM DIMM DDR4</h4>
                         <img src="https://placehold.co/300x200/cccccc/333333?text=RAM+DDR4" alt="Memoria RAM" class="mx-auto my-4 rounded-lg">
-                        <p class="text-gray-600">Mejora el rendimiento multitarea de tu PC.</p>
-                        <p class="text-xl font-bold mt-2 text-blue-800">$35,000 ARS</p>
+                        <p class="text-gray-600 dark:text-gray-400">Mejora el rendimiento multitarea de tu PC.</p>
+                        <p class="text-xl font-bold mt-2 text-blue-800 dark:text-blue-400">$35,000 ARS</p>
                     </div>
                     <!-- Ejemplo de Producto -->
                     <div class="service-card text-center">
                         <h4 class="font-semibold text-lg">Almacenamiento M.2 NVMe</h4>
                         <img src="https://placehold.co/300x200/cccccc/333333?text=NVMe+M.2" alt="M.2 NVMe" class="mx-auto my-4 rounded-lg">
-                        <p class="text-gray-600">Velocidad de carga ultra-rápida.</p>
-                        <p class="text-xl font-bold mt-2 text-blue-800">$48,000 ARS</p>
+                        <p class="text-gray-600 dark:text-gray-400">Velocidad de carga ultra-rápida.</p>
+                        <p class="text-xl font-bold mt-2 text-blue-800 dark:text-blue-400">$48,000 ARS</p>
                     </div>
                     <!-- Ejemplo de Producto -->
                     <div class="service-card text-center">
                         <h4 class="font-semibold text-lg">Pendrive 128GB</h4>
                         <img src="https://placehold.co/300x200/cccccc/333333?text=Pendrive+128GB" alt="Pendrive" class="mx-auto my-4 rounded-lg">
-                        <p class="text-gray-600">Solución de almacenamiento portátil.</p>
-                        <p class="text-xl font-bold mt-2 text-blue-800">$15,000 ARS</p>
+                        <p class="text-gray-600 dark:text-gray-400">Solución de almacenamiento portátil.</p>
+                        <p class="text-xl font-bold mt-2 text-blue-800 dark:text-blue-400">$15,000 ARS</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Sección Quiénes Somos -->
-        <section id="quienes-somos">
+        <section id="quienes-somos" class="bg-white dark:bg-gray-800">
             <div class="container text-center">
                 <h2 class="section-title">Quiénes Somos</h2>
-                <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-                    "I FIX SOLUTIONS" es tu socio tecnológico en Mendoza. Nacimos con la misión de ofrecer un servicio técnico informático confiable, rápido y asequible. Nuestro equipo de expertos está dedicado a resolver cualquier problema, desde la reparación de un equipo hasta el armado de la PC de tus sueños, garantizando siempre la máxima calidad y satisfacción del cliente. 
-                </p>
+                <div class="max-w-3xl mx-auto">
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                        "I FIX SOLUTIONS" es tu socio tecnológico en Mendoza. Nacimos con la misión de ofrecer un servicio técnico informático confiable, rápido y asequible, transformando los desafíos tecnológicos en soluciones eficientes.
+                    </p>
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                        Nuestro equipo de expertos está dedicado a resolver cualquier problema, desde la reparación de un equipo que no enciende hasta el armado de la PC de tus sueños, optimizando cada componente para un rendimiento excepcional. Nos enorgullece nuestro trabajo y garantizamos la máxima calidad y satisfacción del cliente en cada servicio.
+                    </p>
+                    <p class="text-lg text-gray-700 dark:text-gray-300">
+                        En I FIX SOLUTIONS, no solo reparamos computadoras, creamos un camino hacia una experiencia tecnológica más fluida y poderosa.
+                    </p>
+                </div>
             </div>
         </section>
 
         <!-- Sección Dónde nos ubicamos -->
-        <section id="ubicacion" class="bg-gray-100">
+        <section id="ubicacion" class="bg-gray-100 dark:bg-gray-900">
             <div class="container text-center">
                 <h2 class="section-title">Dónde nos ubicamos</h2>
-                <div class="rounded-xl overflow-hidden shadow-lg border-4 border-white">
+                <div class="rounded-xl overflow-hidden shadow-lg border-4 border-white dark:border-gray-800">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3349.5262799307374!2d-68.8488983!3d-32.8604575!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x967e088d189238c5%3A0x6123229705c797bf!2sVicente%20Polimeni%20630%2C%20M5539%20Las%20Heras%2C%20Mendoza!5e0!3m2!1ses-419!2sar!4v1699999999999!5m2!1ses-419!2sar" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
@@ -353,58 +403,79 @@
         <section id="contacto">
             <div class="container">
                 <h2 class="section-title">Contáctanos</h2>
-                <p class="text-center text-gray-700 mb-8 max-w-3xl mx-auto">Envíanos un mensaje o contáctanos por WhatsApp para obtener una respuesta rápida.</p>
+                <p class="text-center text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">Envíanos un mensaje o contáctanos por WhatsApp para obtener una respuesta rápida.</p>
 
                 <!-- Formulario de Contacto -->
-                <div class="bg-white p-8 rounded-xl shadow-lg mb-8 max-w-2xl mx-auto">
-                    <form action="https://formspree.io/f/mqayzbjk" method="POST">
+                <div class="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg mb-8 max-w-2xl mx-auto" id="contact-form-container">
+                    <form id="contact-form">
                         <div class="mb-4">
-                            <label for="nombre" class="block text-gray-700 font-bold mb-2">Nombre</label>
+                            <label for="nombre" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Nombre</label>
                             <input type="text" id="nombre" name="nombre" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                         </div>
                         <div class="mb-4">
-                            <label for="contacto" class="block text-gray-700 font-bold mb-2">Número de Contacto</label>
+                            <label for="contacto" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Número de Contacto</label>
                             <input type="tel" id="contacto" name="contacto" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                         </div>
                         <div class="mb-6">
-                            <label for="motivo" class="block text-gray-700 font-bold mb-2">Motivo</label>
+                            <label for="motivo" class="block text-gray-700 dark:text-gray-300 font-bold mb-2">Motivo</label>
                             <textarea id="motivo" name="motivo" rows="5" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
                         </div>
                         <div class="flex items-center justify-center">
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-colors">
+                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full transition-colors transform hover:scale-105">
                                 Enviar Mensaje
                             </button>
                         </div>
                     </form>
+                    <div id="thank-you-message" class="contact-message">
+                        ¡Gracias por contactarnos! A la brevedad nos comunicaremos contigo.
+                    </div>
                 </div>
 
                 <!-- Botón de WhatsApp -->
                 <div class="text-center">
-                    <a href="https://wa.link/emm9i7" target="_blank" class="whatsapp-btn inline-flex items-center space-x-2 shadow-lg hover:shadow-xl transition-shadow">
+                    <button id="whatsapp-btn" class="whatsapp-btn inline-flex items-center space-x-2 shadow-lg hover:shadow-xl transition-shadow transform hover:scale-105">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         <span>WhatsApp</span>
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
 
+        <!-- WhatsApp Message Popup -->
+        <div id="whatsapp-popup" class="whatsapp-message-popup">
+            <div class="chat-bubble">Redirigiendo a WhatsApp...</div>
+        </div>
+        
+        <!-- Botón de modo oscuro/claro -->
+        <button id="theme-toggle" class="theme-toggle">
+            <svg id="moon-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.106a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 001.06 1.06l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.154 18.894a.75.75 0 001.06-1.06l-1.59-1.59a.75.75 0 00-1.06 1.06l1.59 1.59zM12 18.75a.75.75 0 01-.75.75v2.25a.75.75 0 011.5 0v-2.25a.75.75 0 01-.75-.75zM4.656 17.154a.75.75 0 001.06 1.06l1.59-1.59a.75.75 0 00-1.06-1.06l-1.59 1.59zM1.5 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H2.25a.75.75 0 01-.75-.75zM7.106 6.106a.75.75 0 001.06-1.06l-1.59-1.59a.75.75 0 00-1.06 1.06l1.59 1.59z"></path></svg>
+            <svg id="sun-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.25 10.5a7.5 7.5 0 10-15 0 7.5 7.5 0 0015 0zM12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM17.154 6.106a.75.75 0 010 1.06L15.463 8.86a.75.75 0 01-1.06-1.06l1.691-1.69a.75.75 0 011.06 0zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5h2.25a.75.75 0 01.75.75zM17.154 17.894a.75.75 0 01-1.06 0l-1.69-1.69a.75.75 0 011.06-1.06l1.69 1.69a.75.75 0 010 1.06zM12 18.75a.75.75 0 01-.75-.75v-2.25a.75.75 0 011.5 0v2.25a.75.75 0 01-.75.75zM7.106 17.154a.75.75 0 01-1.06 0l-1.691-1.69a.75.75 0 011.06-1.06l1.69 1.69a.75.75 0 010 1.06zM3 12a.75.75 0 01.75-.75h2.25a.75.75 0 010 1.5H3.75A.75.75 0 013 12zM6.106 6.846a.75.75 0 010-1.06l1.69-1.69a.75.75 0 011.06 1.06L7.106 6.846a.75.75 0 010 1.06z"/></svg>
+        </button>
     </div>
 
     <!-- Script de JavaScript -->
     <script>
         // Lógica de la pantalla de carga
-        const loaderWrapper = document.getElementById('loader-wrapper');
-        const mainContent = document.getElementById('main-content');
-        
-        // Simula la duración de la carga
-        setTimeout(() => {
-            loaderWrapper.style.opacity = '0';
+        window.onload = function() {
+            const loaderWrapper = document.getElementById('loader-wrapper');
+            const mainContent = document.getElementById('main-content');
+            const loaderSlogan = document.getElementById('loader-slogan');
+            
+            // Muestra el eslogan después de un breve retraso
             setTimeout(() => {
-                loaderWrapper.style.display = 'none';
-                mainContent.style.opacity = '1';
-                mainContent.style.visibility = 'visible';
-            }, 500); // Duración de la transición de opacidad
-        }, 3000); // Muestra la pantalla de carga durante 3 segundos
+                loaderSlogan.classList.add('is-visible');
+            }, 500);
+
+            // Oculta la pantalla de carga después de 4.5 segundos
+            setTimeout(() => {
+                loaderWrapper.style.opacity = '0';
+                setTimeout(() => {
+                    loaderWrapper.style.display = 'none';
+                    mainContent.style.opacity = '1';
+                    mainContent.style.visibility = 'visible';
+                }, 500);
+            }, 4500);
+        }
 
         // Lógica para el desplazamiento suave de la navegación
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -416,22 +487,54 @@
             });
         });
 
-        // Lógica para simular la búsqueda de precios y márgenes de ganancia
-        // NOTA: En una aplicación real, esta lógica se ejecutaría en un servidor (backend)
-        // con un lenguaje como Python o Java. Aquí, se simula con JavaScript para
-        // cumplir con la solicitud de tener "todo en un mismo archivo".
-        function calcularPrecios() {
-            const precioSSD = 18000; // Precio de Mercado Libre (simulado)
-            const margenSSD = 0.45; // 45% de margen (entre 30 y 50)
-            const precioVentaSSD = precioSSD * (1 + margenSSD);
+        // Lógica del formulario de contacto
+        const contactForm = document.getElementById('contact-form');
+        const thankYouMessage = document.getElementById('thank-you-message');
 
-            console.log(`Precio de venta del SSD: $${Math.round(precioVentaSSD)} ARS`);
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            setTimeout(() => {
+                contactForm.style.display = 'none';
+                thankYouMessage.style.display = 'block';
+            }, 500);
+        });
+
+        // Lógica del botón de modo oscuro/claro
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const moonIcon = document.getElementById('moon-icon');
+        const sunIcon = document.getElementById('sun-icon');
+
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            moonIcon.classList.add('hidden');
+            sunIcon.classList.remove('hidden');
         }
 
-        // Ejecuta la función al cargar la página (simulado)
-        calcularPrecios();
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                moonIcon.classList.add('hidden');
+                sunIcon.classList.remove('hidden');
+            } else {
+                localStorage.setItem('theme', 'light');
+                moonIcon.classList.remove('hidden');
+                sunIcon.classList.add('hidden');
+            }
+        });
+
+        // Lógica del botón de WhatsApp
+        const whatsappBtn = document.getElementById('whatsapp-btn');
+        const whatsappPopup = document.getElementById('whatsapp-popup');
+
+        whatsappBtn.addEventListener('click', () => {
+            whatsappPopup.style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = 'https://wa.link/emm9i7';
+            }, 2000);
+        });
     </script>
 </body>
 </html>
-
-
